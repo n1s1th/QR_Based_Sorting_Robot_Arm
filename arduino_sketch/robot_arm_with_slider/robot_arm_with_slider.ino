@@ -235,6 +235,19 @@ void robotarm(const int upperPulses[NUM_SERVOS], const int targetPulses[NUM_SERV
   moveServosSmooth(upperPulsesClose, defaultPulse);
   delay(1000);
 }
+
+void scanning(const int upperPulses[NUM_SERVOS], const int targetPulses[NUM_SERVOS], const int targetPulsesClose[NUM_SERVOS], const int upperPulsesClose[NUM_SERVOS]) {
+  moveServosSmooth(currentPulse, upperPulses);
+  delay(1000);
+  moveServosSmooth(upperPulses, targetPulses);
+  delay(1000);
+  moveServosSmooth(targetPulses, targetPulsesClose);
+  delay(1000);
+  moveServosSmooth(targetPulsesClose, upperPulsesClose);
+  delay(1000);
+}
+
+
 void a() { /* fill with your action or copy c() and edit pulses */ }
 void b() { /* fill with your action or copy c() and edit pulses */ }
 void c() {
@@ -250,7 +263,7 @@ void scanningdrop() {
   int targetPulses[NUM_SERVOS]     = {350, 490, 150, 280, 280, 220};
   int targetPulsesClose[NUM_SERVOS]= {350, 580, 150, 180, 220, 220};
   int upperPulsesClose[NUM_SERVOS] = {350, 400, 150, 170, 220, 220};
-  robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
+  scanning(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
 }
 void scanningpick() {
   int upperPulses[NUM_SERVOS]      = {350, 580, 150, 180, 200, 220};
