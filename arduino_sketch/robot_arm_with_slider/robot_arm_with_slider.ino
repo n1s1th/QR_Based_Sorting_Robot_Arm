@@ -7,8 +7,8 @@ Adafruit_PWMServoDriver srituhobby = Adafruit_PWMServoDriver();
 #define NUM_SERVOS 6
 #define servoMIN 150 //0
 #define servoMAX 600 // 180
-int defaultPulse[NUM_SERVOS] = {200, 580, 150, 180, 220, 220};
-int currentPulse[NUM_SERVOS] = {200, 580, 150, 180, 220, 220};
+int defaultPulse[NUM_SERVOS] = {200, 320, 420, 150, 150, 220};
+int currentPulse[NUM_SERVOS] = {200, 320, 420, 170, 180, 220};
 int stepDelay = 20;
 int stepSize = 2;
 
@@ -24,7 +24,7 @@ int roundCount_b1 = 0;
 int roundCount_b2 = 0;
 int roundCount_b3 = 0;
 int roundCount_b4 = 0;
-const int cellSizesCM[] = {6, 12, 20, 25}; // Example: 'A'=4cm, 'B'=6cm, 'C'=8cm, 'D'=10cm
+const int cellSizesCM[] = {8, 14, 22, 25}; // Example: 'A'=4cm, 'B'=6cm, 'C'=8cm, 'D'=10cm
 const int numCells = sizeof(cellSizesCM) / sizeof(cellSizesCM[0]);
 const int scanningAreaCM = 35;
 const int cellWidthCMSorted = 5;
@@ -255,12 +255,19 @@ void scanning(const int upperPulses[NUM_SERVOS], const int targetPulses[NUM_SERV
 
 
 void a() { /* fill with your action or copy c() and edit pulses */ }
-void b() { /* fill with your action or copy c() and edit pulses */ }
+void b() {
+  int upperPulses[NUM_SERVOS]      = {350, 270, 390, 250, 300, 230};
+  int targetPulses[NUM_SERVOS]     = {350, 280, 390, 280, 320, 230};
+  int targetPulsesClose[NUM_SERVOS]= {200, 280, 390, 280, 320, 230};
+  int upperPulsesClose[NUM_SERVOS] = {350, 270, 390, 250, 300, 230};
+  robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
+}
+
 void c() {
-  int upperPulses[NUM_SERVOS]      = {350, 490, 150, 260, 200, 220};
-  int targetPulses[NUM_SERVOS]     = {350, 490, 150, 320, 250, 220};
-  int targetPulsesClose[NUM_SERVOS]= {180, 490, 150, 320, 250, 220};
-  int upperPulsesClose[NUM_SERVOS] = {180, 490, 150, 260, 200, 220};
+  int upperPulses[NUM_SERVOS]      = {350, 450, 420, 300, 180, 220};
+  int targetPulses[NUM_SERVOS]     = {350, 450, 420, 340, 220, 220};
+  int targetPulsesClose[NUM_SERVOS]= {200, 450, 420, 340, 220, 220};
+  int upperPulsesClose[NUM_SERVOS] = {200, 450, 420, 300, 180, 220};
   robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
 }
 void d() { /* fill with your action or copy c() and edit pulses */ }

@@ -1,7 +1,6 @@
 #include <AccelStepper.h>
 
 // --- Hardware pin setup ---
-
 const int stepPin = 3;
 const int dirPin = 2;
 const int limitHomePin = 4; // Home position switch
@@ -11,7 +10,8 @@ AccelStepper stepper(AccelStepper::DRIVER, stepPin, dirPin);
 
 // --- Movement Variables ---
 int roundCount = 0;                // Tracks how many rounds completed
-const int cellSizesCM[] = {4, 6, 8, 10};        // Each cell is 5 cm wide
+const int cellSizesCM[] = {6, 14, 22, 25}; // Cell 'a'=4cm, 'b'=6cm, 'c'=8cm, 'd'=10cm
+const int numCells = sizeof(cellSizesCM) / sizeof(cellSizesCM[0]);
 const int scanningAreaCM = 35;     // Fixed position for scanning area
 const int sortedAreaStartCM = 50;  // Sorted area starts at 50 cm
 
@@ -30,8 +30,9 @@ void loop() {
   if (Serial.available()) {
     char input = Serial.read();
     input = tolower(input); // Accept uppercase
-    if (input >= 'a' && input <= 'd') {
-      int cellCM = (input - 'a' + 1) * cellWidthCM;
+    int cellIndex = input - 'a'; // 'a'->0, 'b'->1, 'c'->2, 'd'->3
+    if (cellIndex >= 0 && cellIndex < numCells) {
+      int cellCM = cellSizesCM[cellIndex];
       Serial.print("Moving to cell ");
       Serial.print(input);
       Serial.print(" at ");
@@ -49,8 +50,8 @@ void loop() {
       moveToPosition(scanningAreaCM);
       delay(200);
 
-      // Calculate sorted area position for this round
-      int sortedAreaCM = sortedAreaStartCM + roundCount * cellWidthCM;
+      // Calculate sorted area position for this round (increases by 5cm every round)
+      int sortedAreaCM = sortedAreaStartCM + roundCount * 5;
       Serial.print("Moving to Sorted Area (");
       Serial.print(sortedAreaCM);
       Serial.println(" cm)");
@@ -60,7 +61,7 @@ void loop() {
       // Record round completion
       roundCount++;
       Serial.print("Round completed! Sorted area for next round: ");
-      Serial.print(sortedAreaStartCM + roundCount * cellWidthCM);
+      Serial.print(sortedAreaStartCM + roundCount * 5);
       Serial.println(" cm");
 
       // Return to home
