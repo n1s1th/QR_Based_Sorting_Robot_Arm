@@ -105,10 +105,12 @@ def main_controller(
             attempts += 1
 
         if tray_code not in ['b1', 'b2', 'b3', 'b4']:
-            print("Failed to detect valid tray QR code after 5 attempts. Skipping this round.")
-            continue
+            print("Failed to detect valid tray QR code after 5 attempts. Defaulting to tray 'b4'.")
+            tray_code = 'b4'
 
         print(f"Detected tray code: {tray_code}")
+        ser.write((tray_code + '\n').encode())
+        print(f"Sent to Arduino: {tray_code}")
 
         # ---- 6. Send tray code to Arduino ----
         ser.write((tray_code + '\n').encode())

@@ -24,7 +24,7 @@ int roundCount_b1 = 0;
 int roundCount_b2 = 0;
 int roundCount_b3 = 0;
 int roundCount_b4 = 0;
-const int cellWidthCM = 5;
+const int cellWidthCM = 6;
 const int scanningAreaCM = 35;
 
 // --- Serial Input State ---
@@ -260,16 +260,16 @@ void c() {
 void d() { /* fill with your action or copy c() and edit pulses */ }
 void scanningdrop() {
   int upperPulses[NUM_SERVOS]      = {200, 580, 150, 180, 220, 220};
-  int targetPulses[NUM_SERVOS]     = {350, 490, 150, 280, 280, 220};
+  int targetPulses[NUM_SERVOS]     = {350, 580, 150, 280, 280, 220};
   int targetPulsesClose[NUM_SERVOS]= {350, 580, 150, 180, 220, 220};
   int upperPulsesClose[NUM_SERVOS] = {350, 400, 150, 170, 220, 220};
   scanning(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
 }
 void scanningpick() {
-  int upperPulses[NUM_SERVOS]      = {350, 580, 150, 180, 200, 220};
-  int targetPulses[NUM_SERVOS]     = {200, 490, 150, 280, 280, 220};
-  int targetPulsesClose[NUM_SERVOS]= {200, 580, 150, 180, 200, 220};
-  int upperPulsesClose[NUM_SERVOS] = {200, 580, 150, 180, 200, 220};
+  int upperPulses[NUM_SERVOS]      = {350, 400, 150, 170, 220, 220};
+  int targetPulses[NUM_SERVOS]     = {350, 580, 150, 180, 220, 220};
+  int targetPulsesClose[NUM_SERVOS]= {200, 580, 150, 280, 280, 220};
+  int upperPulsesClose[NUM_SERVOS] = {200, 580, 150, 180, 220, 220};
   robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
 }
 void b1(){

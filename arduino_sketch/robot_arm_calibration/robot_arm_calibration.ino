@@ -8,7 +8,7 @@ Adafruit_PWMServoDriver srituhobby = Adafruit_PWMServoDriver();
 #define servoMAX 600
 
 // Default positions
-int defaultPulse[6] = {425, 450, 375, 150, 220, 220};
+int defaultPulse[6] = {200, 580, 150, 180, 220, 220};
 int currentPulse[6] = {0, 0, 0, 0, 0, 0};  // Will be updated to default at startup
 
 // Speed tuning

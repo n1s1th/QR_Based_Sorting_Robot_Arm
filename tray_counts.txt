@@ -1,0 +1,4 @@
+B1 count: 0
+B2 count: 0
+B3 count: 0
+B4 count: 7

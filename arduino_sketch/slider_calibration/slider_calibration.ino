@@ -11,7 +11,7 @@ AccelStepper stepper(AccelStepper::DRIVER, stepPin, dirPin);
 
 // --- Movement Variables ---
 int roundCount = 0;                // Tracks how many rounds completed
-const int cellWidthCM = 5;         // Each cell is 5 cm wide
+const int cellSizesCM[] = {4, 6, 8, 10};        // Each cell is 5 cm wide
 const int scanningAreaCM = 35;     // Fixed position for scanning area
 const int sortedAreaStartCM = 50;  // Sorted area starts at 50 cm
 
