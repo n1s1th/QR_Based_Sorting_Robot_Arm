@@ -242,6 +242,7 @@ void robotarm(const int upperPulses[NUM_SERVOS], const int targetPulses[NUM_SERV
   delay(1000);
 }
 
+
 void scanning(const int upperPulses[NUM_SERVOS], const int targetPulses[NUM_SERVOS], const int targetPulsesClose[NUM_SERVOS], const int upperPulsesClose[NUM_SERVOS]) {
   moveServosSmooth(currentPulse, upperPulses);
   delay(1000);
@@ -253,15 +254,24 @@ void scanning(const int upperPulses[NUM_SERVOS], const int targetPulses[NUM_SERV
   delay(1000);
 }
 
+void a(){}
+void b(){}
+void d(){}
 
-void a() { /* fill with your action or copy c() and edit pulses */ }
-void b() {
-  int upperPulses[NUM_SERVOS]      = {350, 270, 390, 250, 300, 230};
-  int targetPulses[NUM_SERVOS]     = {350, 280, 390, 280, 320, 230};
-  int targetPulsesClose[NUM_SERVOS]= {200, 280, 390, 280, 320, 230};
-  int upperPulsesClose[NUM_SERVOS] = {350, 270, 390, 250, 300, 230};
-  robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
-}
+// void a() {
+//   int upperPulses[NUM_SERVOS]      = {350, 450, 420, 300, 180, 220};
+//   int targetPulses[NUM_SERVOS]     = {350, 450, 420, 340, 220, 220};
+//   int targetPulsesClose[NUM_SERVOS]= {200, 450, 420, 340, 220, 220};
+//   int upperPulsesClose[NUM_SERVOS] = {200, 450, 420, 300, 180, 220};
+//   robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
+// }
+// void b() {
+//   int upperPulses[NUM_SERVOS]      = {350, 270, 390, 250, 300, 230};
+//   int targetPulses[NUM_SERVOS]     = {350, 280, 390, 280, 320, 230};
+//   int targetPulsesClose[NUM_SERVOS]= {200, 280, 390, 280, 320, 230};
+//   int upperPulsesClose[NUM_SERVOS] = {350, 270, 390, 250, 300, 230};
+//   robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
+// }
 
 void c() {
   int upperPulses[NUM_SERVOS]      = {350, 450, 420, 300, 180, 220};
@@ -270,7 +280,14 @@ void c() {
   int upperPulsesClose[NUM_SERVOS] = {200, 450, 420, 300, 180, 220};
   robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
 }
-void d() { /* fill with your action or copy c() and edit pulses */ }
+// void d() { 
+//   int upperPulses[NUM_SERVOS]      = {350, 450, 420, 300, 180, 220};
+//   int targetPulses[NUM_SERVOS]     = {350, 450, 420, 340, 220, 220};
+//   int targetPulsesClose[NUM_SERVOS]= {200, 450, 420, 340, 220, 220};
+//   int upperPulsesClose[NUM_SERVOS] = {200, 450, 420, 300, 180, 220};
+//   robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
+// }
+
 void scanningdrop() {
   int upperPulses[NUM_SERVOS]      = {200, 580, 150, 180, 220, 220};
   int targetPulses[NUM_SERVOS]     = {350, 580, 150, 280, 280, 220};

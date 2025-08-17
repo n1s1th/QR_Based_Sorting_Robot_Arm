@@ -38,7 +38,7 @@ def main_controller(
     serial_port='COM6',
     baud_rate=9600,
     tray_file='tray_counts.txt',
-    crop_x=200, crop_y=400, crop_width=250, crop_height=250, camera_index=0
+    crop_x=88, crop_y=232, crop_width=146, crop_height=141, camera_index=2
 ):
     tray_counts = {"b1": 0, "b2": 0, "b3": 0, "b4": 0}
 
