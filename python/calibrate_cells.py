@@ -1,16 +1,12 @@
 import cv2
-
-# Instructions:
-# 1. Show your tray under the camera.
-# 2. Run this script.
-# 3. Use the mouse to draw a rectangle for each cell (click-drag-release).
-# 4. Press 's' to save and print all rectangles. Press 'q' to quit.
+import json
 
 rectangles = []
 drawing = False
 ix, iy = -1, -1
 img = None
 clone = None
+cell_labels = ["A a", "A b", "A c", "B a", "B b", "B c", "C a", "C b", "C c"]  # Change as needed
 
 def draw_rectangle(event, x, y, flags, param):
     global ix, iy, drawing, img, clone, rectangles
@@ -25,21 +21,20 @@ def draw_rectangle(event, x, y, flags, param):
     elif event == cv2.EVENT_LBUTTONUP:
         drawing = False
         cv2.rectangle(img, (ix, iy), (x, y), (0, 255, 0), 2)
-        # Standardize rectangle: top-left corner, width, height
         x0, y0 = min(ix, x), min(iy, y)
         w, h = abs(x - ix), abs(y - iy)
-        rectangles.append((x0, y0, w, h))
-        print(f"Rectangle: x={x0}, y={y0}, w={w}, h={h}")
+        rectangles.append({"label": cell_labels[len(rectangles)], "x": x0, "y": y0, "w": w, "h": h})
+        print(f"Rectangle for {cell_labels[len(rectangles)-1]}: x={x0}, y={y0}, w={w}, h={h}")
 
 def main():
     global img, clone
-    cap = cv2.VideoCapture(2)
+    cap = cv2.VideoCapture(0)
     if not cap.isOpened():
         print("Could not open camera.")
         return
 
     print("Draw rectangles for each cell using mouse.")
-    print("Press 's' to print all rectangles. Press 'q' to quit.")
+    print("Press 's' to save rectangles to JSON. Press 'q' to quit.")
 
     ret, img = cap.read()
     if not ret:
@@ -55,10 +50,11 @@ def main():
         if key == ord('q'):
             break
         if key == ord('s'):
-            print("\n--- All rectangles ---")
-            for i, rect in enumerate(rectangles):
-                print(f"Cell {i+1}: x={rect[0]}, y={rect[1]}, w={rect[2]}, h={rect[3]}")
-            print("---------------------")
+            filename = "tray_cells.json"
+            with open(filename, "w") as f:
+                json.dump(rectangles, f, indent=2)
+            print(f"Saved {len(rectangles)} rectangles to {filename}.")
+            break
 
     cap.release()
     cv2.destroyAllWindows()

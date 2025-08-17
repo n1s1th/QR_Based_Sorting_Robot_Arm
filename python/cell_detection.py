@@ -1,23 +1,11 @@
 import cv2
 import numpy as np
+import json
 
-# Define tray cell positions and labels (update with your actual coordinates)
-cell_labels = [
-    # Row A
-    {"label": "A a", "x": 30,  "y": 40,  "w": 80,  "h": 80},
-    {"label": "A b", "x": 130, "y": 40,  "w": 80,  "h": 80},
-    {"label": "A c", "x": 230, "y": 40,  "w": 80,  "h": 80},
-    # Row B
-    {"label": "B a", "x": 30,  "y": 140, "w": 80,  "h": 80},
-    {"label": "B b", "x": 130, "y": 140, "w": 80,  "h": 80},
-    {"label": "B c", "x": 230, "y": 140, "w": 80,  "h": 80},
-    # Row C
-    {"label": "C a", "x": 30,  "y": 240, "w": 80,  "h": 80},
-    {"label": "C b", "x": 130, "y": 240, "w": 80,  "h": 80},
-    {"label": "C c", "x": 230, "y": 240, "w": 80,  "h": 80},
-]
+def load_cell_labels(filename="tray_cells.json"):
+    with open(filename, "r") as f:
+        return json.load(f)
 
-# Simple detector parameters
 MIN_AREA = 900
 MAX_AREA = 90000
 OTSU_SENSITIVITY = 22
@@ -75,6 +63,8 @@ def assign_cell(cx, cy, cell_labels):
     return None
 
 def main():
+    cell_labels = load_cell_labels("tray_cells.json")
+
     print("Step 1: Capture background image (no object).")
     bg_img = capture_image(window_name="Background Image")
     if bg_img is None:
