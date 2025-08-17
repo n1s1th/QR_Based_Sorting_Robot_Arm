@@ -24,8 +24,10 @@ int roundCount_b1 = 0;
 int roundCount_b2 = 0;
 int roundCount_b3 = 0;
 int roundCount_b4 = 0;
-const int cellWidthCM = 6;
+const int cellSizesCM[] = {6, 12, 20, 25}; // Example: 'A'=4cm, 'B'=6cm, 'C'=8cm, 'D'=10cm
+const int numCells = sizeof(cellSizesCM) / sizeof(cellSizesCM[0]);
 const int scanningAreaCM = 35;
+const int cellWidthCMSorted = 5;
 
 // --- Serial Input State ---
 String sliderInput = "";
@@ -72,8 +74,12 @@ void loop() {
 
     // --- Workflow Update ---
     // 1. Move slider to selected position
-    int cellNum = (sliderInput[0] - 'A' + 1);
-    int cellCM = cellNum * cellWidthCM;
+    int cellIndex = sliderInput[0] - 'A';
+    int cellCM = cellSizesCM[cellIndex];
+    if (cellIndex < 0 || cellIndex >= numCells) {
+      Serial.println("Invalid cell input.");
+      return;
+    }
     Serial.print("Moving slider to cell ");
     Serial.print(sliderInput);
     Serial.print(" at ");
@@ -148,7 +154,7 @@ bool isValidSort(String s) {
 // --- Sorted Area Functions ---
 void sortedAreaCM1() {
   int sortedAreaStartCM = 50;
-  int sortedAreaCM = sortedAreaStartCM + roundCount_b1 * cellWidthCM;
+  int sortedAreaCM = sortedAreaStartCM + roundCount_b1 * cellWidthCMSorted;
   Serial.print("Moving slider to sorted area for b1 (");
   Serial.print(sortedAreaCM);
   Serial.println(" cm)");
@@ -158,7 +164,7 @@ void sortedAreaCM1() {
 }
 void sortedAreaCM2() {
   int sortedAreaStartCM = 50;
-  int sortedAreaCM = sortedAreaStartCM + roundCount_b2 * cellWidthCM;
+  int sortedAreaCM = sortedAreaStartCM + roundCount_b2 * cellWidthCMSorted;
   Serial.print("Moving slider to sorted area for b2 (");
   Serial.print(sortedAreaCM);
   Serial.println(" cm)");
@@ -168,7 +174,7 @@ void sortedAreaCM2() {
 }
 void sortedAreaCM3() {
   int sortedAreaStartCM = 60;
-  int sortedAreaCM = sortedAreaStartCM + roundCount_b3 * cellWidthCM;
+  int sortedAreaCM = sortedAreaStartCM + roundCount_b3 * cellWidthCMSorted;
   Serial.print("Moving slider to sorted area for b3 (");
   Serial.print(sortedAreaCM);
   Serial.println(" cm)");
@@ -178,7 +184,7 @@ void sortedAreaCM3() {
 }
 void sortedAreaCM4() {
   int sortedAreaStartCM = 60;
-  int sortedAreaCM = sortedAreaStartCM + roundCount_b4 * cellWidthCM;
+  int sortedAreaCM = sortedAreaStartCM + roundCount_b4 * cellWidthCMSorted;
   Serial.print("Moving slider to sorted area for b4 (");
   Serial.print(sortedAreaCM);
   Serial.println(" cm)");
