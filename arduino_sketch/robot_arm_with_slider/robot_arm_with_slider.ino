@@ -24,9 +24,9 @@ int roundCount_b1 = 0;
 int roundCount_b2 = 0;
 int roundCount_b3 = 0;
 int roundCount_b4 = 0;
-const int cellSizesCM[] = {8, 14, 22, 25}; // Example: 'A'=4cm, 'B'=6cm, 'C'=8cm, 'D'=10cm
+const int cellSizesCM[] = {8, 17, 26, 30}; // Example: 'A'=8cm, 'B'=14cm, 'C'=22cm, 'D'=25cm
 const int numCells = sizeof(cellSizesCM) / sizeof(cellSizesCM[0]);
-const int scanningAreaCM = 35;
+const int scanningAreaCM = 38;
 const int cellWidthCMSorted = 5;
 
 // --- Serial Input State ---
@@ -49,7 +49,7 @@ void setup() {
   stepper.setAcceleration(400);
   homeStepper();
 
-  Serial.println("Enter slider position (A-D) and robot arm action (a-d), separated by space, e.g.: B c");
+  Serial.println("Enter slider position and robot arm action separated by space, e.g.: B c");
 }
 
 // --- LOOP ---
@@ -58,28 +58,16 @@ void loop() {
     String inStr = Serial.readStringUntil('\n');
     inStr.trim();
     int spaceIdx = inStr.indexOf(' ');
-    if (spaceIdx == -1 || spaceIdx == 0 || spaceIdx == inStr.length()-1) {
-      Serial.println("Invalid input. Enter as: B c");
-      Serial.println("Enter slider position (A-D) and robot arm action (a-d), separated by space:");
-      return;
-    }
+    // No input validation! Assumes input is always correct format.
     sliderInput = inStr.substring(0, spaceIdx);
     robotInput = inStr.substring(spaceIdx+1);
 
-    if (!isValidSlider(sliderInput) || !isValidRobot(robotInput)) {
-      Serial.println("Invalid input. Slider must be A-D and robot arm must be a-d. Try again:");
-      return;
-    }
     waitingForInitialInputs = false;
 
     // --- Workflow Update ---
     // 1. Move slider to selected position
     int cellIndex = sliderInput[0] - 'A';
     int cellCM = cellSizesCM[cellIndex];
-    if (cellIndex < 0 || cellIndex >= numCells) {
-      Serial.println("Invalid cell input.");
-      return;
-    }
     Serial.print("Moving slider to cell ");
     Serial.print(sliderInput);
     Serial.print(" at ");
@@ -107,15 +95,12 @@ void loop() {
 
     // Prepare for sort input
     waitingForSortInput = true;
-    Serial.println("Enter sorted area action (b1, b2, b3, b4):");
+    Serial.println("Enter sorted area action (b1, b2, b3):");
   }
   else if (waitingForSortInput && Serial.available() > 0) {
     String inStr = Serial.readStringUntil('\n');
     inStr.trim();
-    if (!isValidSort(inStr)) {
-      Serial.println("Invalid input. Enter b1, b2, b3, or b4:");
-      return;
-    }
+    // No input validation! Assumes sort input always correct.
     sortInput = inStr;
 
     // --- Workflow Update ---
@@ -136,24 +121,13 @@ void loop() {
     // Prepare for next round
     waitingForInitialInputs = true;
     waitingForSortInput = false;
-    Serial.println("Enter slider position (A-D) and robot arm action (a-d), separated by space, e.g.: B c");
+    Serial.println("Enter slider position and robot arm action separated by space, e.g.: B c");
   }
-}
-
-// --- Input Validation ---
-bool isValidSlider(String s) {
-  return (s.length() == 1 && (s[0] == 'A' || s[0] == 'B' || s[0] == 'C' || s[0] == 'D'));
-}
-bool isValidRobot(String s) {
-  return (s.length() == 1 && (s[0] == 'a' || s[0] == 'b' || s[0] == 'c' || s[0] == 'd'));
-}
-bool isValidSort(String s) {
-  return (s == "b1" || s == "b2" || s == "b3" || s == "b4");
 }
 
 // --- Sorted Area Functions ---
 void sortedAreaCM1() {
-  int sortedAreaStartCM = 50;
+  int sortedAreaStartCM = 55;
   int sortedAreaCM = sortedAreaStartCM + roundCount_b1 * cellWidthCMSorted;
   Serial.print("Moving slider to sorted area for b1 (");
   Serial.print(sortedAreaCM);
@@ -163,7 +137,7 @@ void sortedAreaCM1() {
   roundCount_b1++;
 }
 void sortedAreaCM2() {
-  int sortedAreaStartCM = 50;
+  int sortedAreaStartCM = 55;
   int sortedAreaCM = sortedAreaStartCM + roundCount_b2 * cellWidthCMSorted;
   Serial.print("Moving slider to sorted area for b2 (");
   Serial.print(sortedAreaCM);
@@ -195,7 +169,6 @@ void sortedAreaCM4() {
 
 // --- Robot Arm Functions ---
 // ... (unchanged, same as your code)
-// --- Use the rest of your robot arm, moving, and stepper code unchanged below this point ---
 void setServos(const int pulses[NUM_SERVOS]) {
   for (int i = 0; i < NUM_SERVOS; i++) {
     srituhobby.setPWM(i, 0, pulses[i]);
@@ -242,7 +215,6 @@ void robotarm(const int upperPulses[NUM_SERVOS], const int targetPulses[NUM_SERV
   delay(1000);
 }
 
-
 void scanning(const int upperPulses[NUM_SERVOS], const int targetPulses[NUM_SERVOS], const int targetPulsesClose[NUM_SERVOS], const int upperPulsesClose[NUM_SERVOS]) {
   moveServosSmooth(currentPulse, upperPulses);
   delay(1000);
@@ -254,25 +226,20 @@ void scanning(const int upperPulses[NUM_SERVOS], const int targetPulses[NUM_SERV
   delay(1000);
 }
 
-void a(){}
-void b(){}
-void d(){}
-
-// void a() {
-//   int upperPulses[NUM_SERVOS]      = {350, 450, 420, 300, 180, 220};
-//   int targetPulses[NUM_SERVOS]     = {350, 450, 420, 340, 220, 220};
-//   int targetPulsesClose[NUM_SERVOS]= {200, 450, 420, 340, 220, 220};
-//   int upperPulsesClose[NUM_SERVOS] = {200, 450, 420, 300, 180, 220};
-//   robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
-// }
-// void b() {
-//   int upperPulses[NUM_SERVOS]      = {350, 270, 390, 250, 300, 230};
-//   int targetPulses[NUM_SERVOS]     = {350, 280, 390, 280, 320, 230};
-//   int targetPulsesClose[NUM_SERVOS]= {200, 280, 390, 280, 320, 230};
-//   int upperPulsesClose[NUM_SERVOS] = {350, 270, 390, 250, 300, 230};
-//   robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
-// }
-
+void a() {
+  int upperPulses[NUM_SERVOS]      = {350, 240, 420, 280, 450, 240};
+  int targetPulses[NUM_SERVOS]     = {350, 240, 420, 400, 500, 240};
+  int targetPulsesClose[NUM_SERVOS]= {200, 240, 420, 400, 500, 240};
+  int upperPulsesClose[NUM_SERVOS] = {200, 240, 420, 280, 450, 240};
+  robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
+}
+void b(){
+  int upperPulses[NUM_SERVOS]      = {350, 270, 390, 250, 300, 230};
+  int targetPulses[NUM_SERVOS]     = {350, 280, 390, 280, 320, 230};
+  int targetPulsesClose[NUM_SERVOS]= {200, 280, 390, 280, 320, 230};
+  int upperPulsesClose[NUM_SERVOS] = {200, 270, 390, 250, 300, 230};
+  robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
+}
 void c() {
   int upperPulses[NUM_SERVOS]      = {350, 450, 420, 300, 180, 220};
   int targetPulses[NUM_SERVOS]     = {350, 450, 420, 340, 220, 220};
@@ -280,26 +247,19 @@ void c() {
   int upperPulsesClose[NUM_SERVOS] = {200, 450, 420, 300, 180, 220};
   robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
 }
-// void d() { 
-//   int upperPulses[NUM_SERVOS]      = {350, 450, 420, 300, 180, 220};
-//   int targetPulses[NUM_SERVOS]     = {350, 450, 420, 340, 220, 220};
-//   int targetPulsesClose[NUM_SERVOS]= {200, 450, 420, 340, 220, 220};
-//   int upperPulsesClose[NUM_SERVOS] = {200, 450, 420, 300, 180, 220};
-//   robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
-// }
 
 void scanningdrop() {
-  int upperPulses[NUM_SERVOS]      = {200, 580, 150, 180, 220, 220};
-  int targetPulses[NUM_SERVOS]     = {350, 580, 150, 280, 280, 220};
-  int targetPulsesClose[NUM_SERVOS]= {350, 580, 150, 180, 220, 220};
-  int upperPulsesClose[NUM_SERVOS] = {350, 400, 150, 170, 220, 220};
+  int upperPulses[NUM_SERVOS]      = {200, 270, 390, 250, 300, 230};
+  int targetPulses[NUM_SERVOS]     = {200, 280, 390, 280, 320, 230};
+  int targetPulsesClose[NUM_SERVOS]= {350, 280, 390, 280, 320, 230};
+  int upperPulsesClose[NUM_SERVOS] = {350, 500, 390, 250, 300, 230};
   scanning(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
 }
 void scanningpick() {
-  int upperPulses[NUM_SERVOS]      = {350, 400, 150, 170, 220, 220};
-  int targetPulses[NUM_SERVOS]     = {350, 580, 150, 180, 220, 220};
-  int targetPulsesClose[NUM_SERVOS]= {200, 580, 150, 280, 280, 220};
-  int upperPulsesClose[NUM_SERVOS] = {200, 580, 150, 180, 220, 220};
+  int upperPulses[NUM_SERVOS]      = {350, 270, 390, 250, 300, 230};
+  int targetPulses[NUM_SERVOS]     = {350, 280, 390, 280, 320, 230};
+  int targetPulsesClose[NUM_SERVOS]= {200, 280, 390, 280, 320, 230};
+  int upperPulsesClose[NUM_SERVOS] = {200, 270, 390, 250, 300, 230};
   robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
 }
 void b1(){
@@ -312,10 +272,10 @@ void b1(){
 }
 void b2(){
   Serial.println("Triggered b2()");
-  int upperPulses[NUM_SERVOS]      = {210, 500, 160, 270, 210, 230};
-  int targetPulses[NUM_SERVOS]     = {210, 500, 160, 330, 260, 230};
-  int targetPulsesClose[NUM_SERVOS]= {360, 500, 160, 330, 260, 230};
-  int upperPulsesClose[NUM_SERVOS] = {360, 500, 160, 270, 210, 230};
+  int upperPulses[NUM_SERVOS]      = {200, 450, 420, 300, 180, 220};
+  int targetPulses[NUM_SERVOS]     = {200, 450, 420, 340, 220, 220};
+  int targetPulsesClose[NUM_SERVOS]= {350, 450, 420, 340, 220, 220};
+  int upperPulsesClose[NUM_SERVOS] = {350, 450, 420, 300, 180, 220};
   robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
 }
 void b3(){
@@ -328,10 +288,10 @@ void b3(){
 }
 void b4(){
   Serial.println("Triggered b4()");
-  int upperPulses[NUM_SERVOS]      = {230, 520, 180, 290, 230, 250};
-  int targetPulses[NUM_SERVOS]     = {230, 520, 180, 350, 280, 250};
-  int targetPulsesClose[NUM_SERVOS]= {380, 520, 180, 350, 280, 250};
-  int upperPulsesClose[NUM_SERVOS] = {380, 520, 180, 290, 230, 250};
+  int upperPulses[NUM_SERVOS]      = {200, 450, 420, 300, 180, 220};
+  int targetPulses[NUM_SERVOS]     = {200, 450, 420, 340, 220, 220};
+  int targetPulsesClose[NUM_SERVOS]= {350, 450, 420, 340, 220, 220};
+  int upperPulsesClose[NUM_SERVOS] = {350, 450, 420, 300, 180, 220};
   robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
 }
 void dispatchFunction(char ch) {
@@ -339,7 +299,6 @@ void dispatchFunction(char ch) {
     case 'a': a(); break;
     case 'b': b(); break;
     case 'c': c(); break;
-    case 'd': d(); break;
     default: Serial.println("Unknown robot arm command."); break;
   }
 }
@@ -351,7 +310,6 @@ void triggerSortFunction(String s) {
 }
 
 // --- Stepper/Slider Functions ---
-// ... (unchanged)
 void homeStepper() {
   Serial.println("Homing slider...");
   stepper.setSpeed(-400);

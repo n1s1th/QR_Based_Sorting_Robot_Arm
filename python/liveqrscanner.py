@@ -49,3 +49,12 @@ def scan_qr_live_cropped(crop_x, crop_y, crop_width, crop_height, camera_index=0
     cap.release()
     cv2.destroyAllWindows()
     return qr_data
+
+# Example usage:
+if __name__ == "__main__":
+    crop_width = 250
+    crop_height = 250
+    crop_x = 200
+    crop_y = 500
+    data = scan_qr_live_cropped(crop_x, crop_y, crop_width, crop_height)
+    print("QR code data:" if data else "No QR code detected.", data)
