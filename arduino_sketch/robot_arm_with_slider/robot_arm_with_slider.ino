@@ -235,10 +235,10 @@ void scanning(const int upperPulses[NUM_SERVOS], const int targetPulses[NUM_SERV
 }
 
 void a() {
-  int upperPulses[NUM_SERVOS]      = {350, 240, 420, 280, 450, 240};
+  int upperPulses[NUM_SERVOS]      = {350, 180, 420, 220, 450, 240};
   int targetPulses[NUM_SERVOS]     = {350, 240, 420, 400, 500, 240};
   int targetPulsesClose[NUM_SERVOS]= {200, 240, 420, 400, 500, 240};
-  int upperPulsesClose[NUM_SERVOS] = {200, 240, 420, 280, 450, 240};
+  int upperPulsesClose[NUM_SERVOS] = {200, 180, 420, 220, 450, 240};
   robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
 }
 void b(){

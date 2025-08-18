@@ -1,6 +1,6 @@
 import serial
 import time
-from automated_tray_sorting import scan_qr_live_cropped
+from automated_tray_sorting import scan_qr_live_cropped_timeout
 from automated_cell_selection import select_random_cell_and_format
 import random
 
@@ -13,7 +13,7 @@ def main_controller(
     crop_x = 250,
     crop_y = 200,
     camera_index = 2):
-    
+
     tray_counts = {"b1": 0, "b2": 0, "b3": 0, "b4": 0}
 
     # Load previous tray counts if file exists
@@ -69,9 +69,9 @@ def main_controller(
                 if "READY_TO_SCAN" in line:
                     break
 
-        # ---- 5. Scan QR code for tray selection using live method ----
-        print("Scanning QR code for tray number (live)...")
-        tray_code = scan_qr_live_cropped(crop_x, crop_y, crop_width, crop_height, camera_index)
+        # ---- 5. Scan QR code for tray selection using new method ----
+        print("Scanning QR code for tray number (live, 5s timeout)...")
+        tray_code = scan_qr_live_cropped_timeout(camera_index=camera_index, timeout_sec=5)
         if tray_code not in ['b1', 'b2', 'b3', 'b4']:
             print("No valid QR code detected. Defaulting to tray 'b4'.")
             tray_code = 'b4'
@@ -102,4 +102,4 @@ def main_controller(
         print("\nRound complete. Ready for next round!\n")
 
 if __name__ == "__main__":
-    main_controller()
+    main_controller()   

@@ -1,54 +1,70 @@
 import cv2
+import json
+import time
 from pyzbar.pyzbar import decode
 
-def scan_qr_live_cropped(crop_x, crop_y, crop_width, crop_height, camera_index=0, max_attempts=5):
+# Hardcoded JSON path for crop box
+JSON_PATH = "crop_box.json"
+
+def load_crop_box(json_path=JSON_PATH):
+    with open(json_path, "r") as f:
+        data = json.load(f)
+        return data["x"], data["y"], data["width"], data["height"]
+
+def scan_qr_live_cropped_timeout(camera_index=2, timeout_sec=5):
     """
     Scans for a QR code in a cropped region from a live camera feed.
-    Tries up to `max_attempts` times. If none found, returns 'b4'.
-
+    Crop region is loaded from crop_box.json.
+    If no QR code is detected within `timeout_sec` seconds, returns 'b4'.
     Returns:
         str: Decoded QR code data, or 'b4' if not found.
     """
+    crop_x, crop_y, crop_width, crop_height = load_crop_box()
     cap = cv2.VideoCapture(camera_index)
-    qr_data = None
-    attempts = 0
+    if not cap.isOpened():
+        print(f"Failed to open camera at index {camera_index}")
+        return "b4"
 
-    while attempts < max_attempts:
+    start_time = time.time()
+    qr_data = None
+
+    while True:
         ret, frame = cap.read()
         if not ret:
-            print("Failed to capture frame from camera.")
+            print("Failed to read from camera.")
             break
 
-        h, w = frame.shape[:2]
-        # Ensure crop area is within bounds
-        crop_x = max(0, min(crop_x, w - crop_width))
-        crop_y = max(0, min(crop_y, h - crop_height))
-        crop_width = min(crop_width, w - crop_x)
-        crop_height = min(crop_height, h - crop_y)
+        # Draw the virtual box for user alignment
+        preview = frame.copy()
+        cv2.rectangle(
+            preview,
+            (crop_x, crop_y),
+            (crop_x + crop_width, crop_y + crop_height),
+            (0, 255, 0),
+            2,
+        )
+        cv2.imshow("Live Camera (Box Area)", preview)
 
+        # Crop area for QR detection
         cropped = frame[crop_y:crop_y + crop_height, crop_x:crop_x + crop_width]
-
         decoded_objects = decode(cropped)
         if decoded_objects:
             qr_data = decoded_objects[0].data.decode("utf-8")
-            print(f"QR detected: {qr_data}")
+            print("QR Code detected:", qr_data)
             break
 
-        # Optional: Show preview
-        preview = frame.copy()
-        cv2.rectangle(preview, (crop_x, crop_y), (crop_x + crop_width, crop_y + crop_height), (0, 255, 0), 2)
-        cv2.imshow('Live QR Crop (press Q to quit)', preview)
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            print("User quit scanning.")
+        # Terminate after timeout
+        if time.time() - start_time > timeout_sec:
+            print(f"No QR code detected in {timeout_sec} seconds.")
             break
 
-        print(f"Attempt {attempts+1}: No QR code detected.")
-        attempts += 1
+        # Optional: allow user to quit
+        if cv2.waitKey(1) & 0xFF == ord("q"):
+            print("User quit program.")
+            break
 
     cap.release()
     cv2.destroyAllWindows()
 
-    if qr_data is None:
-        print("No QR code detected after max attempts. Returning 'b4'.")
-        qr_data = "b4"
-    return qr_data
+    # If nothing detected, return 'b4' as default
+    return qr_data if qr_data else "b4"
