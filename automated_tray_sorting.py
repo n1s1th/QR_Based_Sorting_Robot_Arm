@@ -1,25 +1,19 @@
 import cv2
 from pyzbar.pyzbar import decode
 
-def scan_qr_live_cropped(crop_x, crop_y, crop_width, crop_height, camera_index=0):
+def scan_qr_live_cropped(crop_x, crop_y, crop_width, crop_height, camera_index=0, max_attempts=5):
     """
     Scans for a QR code in a cropped region from a live camera feed.
-    Returns the first detected QR code data and exits.
-
-    Args:
-        crop_x (int): X coordinate of the top-left corner of the crop area.
-        crop_y (int): Y coordinate of the top-left corner of the crop area.
-        crop_width (int): Width of the crop area.
-        crop_height (int): Height of the crop area.
-        camera_index (int): Index of the camera (default: 0).
+    Tries up to `max_attempts` times. If none found, returns 'b4'.
 
     Returns:
-        str or None: Decoded QR code data, or None if not found.
+        str: Decoded QR code data, or 'b4' if not found.
     """
     cap = cv2.VideoCapture(camera_index)
     qr_data = None
+    attempts = 0
 
-    while True:
+    while attempts < max_attempts:
         ret, frame = cap.read()
         if not ret:
             print("Failed to capture frame from camera.")
@@ -37,15 +31,24 @@ def scan_qr_live_cropped(crop_x, crop_y, crop_width, crop_height, camera_index=0
         decoded_objects = decode(cropped)
         if decoded_objects:
             qr_data = decoded_objects[0].data.decode("utf-8")
+            print(f"QR detected: {qr_data}")
             break
 
-        # Optional: Show the live cropped area for alignment
+        # Optional: Show preview
         preview = frame.copy()
         cv2.rectangle(preview, (crop_x, crop_y), (crop_x + crop_width, crop_y + crop_height), (0, 255, 0), 2)
         cv2.imshow('Live QR Crop (press Q to quit)', preview)
         if cv2.waitKey(1) & 0xFF == ord('q'):
+            print("User quit scanning.")
             break
+
+        print(f"Attempt {attempts+1}: No QR code detected.")
+        attempts += 1
 
     cap.release()
     cv2.destroyAllWindows()
+
+    if qr_data is None:
+        print("No QR code detected after max attempts. Returning 'b4'.")
+        qr_data = "b4"
     return qr_data

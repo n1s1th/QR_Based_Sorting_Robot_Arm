@@ -16,7 +16,9 @@ int stepSize = 2;
 const int stepPin = 3;
 const int dirPin = 2;
 const int limitHomePin = 4;
-const int stepsPerCM = 50;
+const int MS1 = 9;
+const int MS2 = 10;
+const int stepsPerCM = 50*8; // 50 steps per cm, 8 microsteps per step
 AccelStepper stepper(AccelStepper::DRIVER, stepPin, dirPin);
 
 // --- Movement Variables ---
@@ -45,8 +47,14 @@ void setup() {
   srituhobby.setPWMFreq(60);
   setServos(defaultPulse);
 
-  stepper.setMaxSpeed(800);
-  stepper.setAcceleration(400);
+  pinMode(MS1, OUTPUT); // Setup Microstepping pins
+  pinMode(MS2, OUTPUT);
+
+  digitalWrite(MS1, HIGH); // Set to 1/8 microstepping
+  digitalWrite(MS2, HIGH);
+
+  stepper.setMaxSpeed(800*8);
+  stepper.setAcceleration(400*8);
   homeStepper();
 
   Serial.println("Enter slider position and robot arm action separated by space, e.g.: B c");
@@ -252,7 +260,7 @@ void scanningdrop() {
   int upperPulses[NUM_SERVOS]      = {200, 270, 390, 250, 300, 230};
   int targetPulses[NUM_SERVOS]     = {200, 280, 390, 280, 320, 230};
   int targetPulsesClose[NUM_SERVOS]= {350, 280, 390, 280, 320, 230};
-  int upperPulsesClose[NUM_SERVOS] = {350, 500, 390, 250, 300, 230};
+  int upperPulsesClose[NUM_SERVOS] = {350, 150, 390, 250, 300, 230};
   scanning(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
 }
 void scanningpick() {
@@ -312,7 +320,7 @@ void triggerSortFunction(String s) {
 // --- Stepper/Slider Functions ---
 void homeStepper() {
   Serial.println("Homing slider...");
-  stepper.setSpeed(-400);
+  stepper.setSpeed(-400*8);
   while (digitalRead(limitHomePin) == HIGH) {
     stepper.runSpeed();
   }

@@ -1,6 +1,6 @@
 import cv2
 
-def draw_crop_area_with_mouse(camera_index=0):
+def draw_crop_area_with_mouse(camera_index=2):
     """
     Allows user to draw a crop rectangle with mouse on live camera feed.
     After drawing, prints crop_x, crop_y, crop_width, crop_height to terminal.

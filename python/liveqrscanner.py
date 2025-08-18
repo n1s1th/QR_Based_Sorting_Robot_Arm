@@ -52,9 +52,9 @@ def scan_qr_live_cropped(crop_x, crop_y, crop_width, crop_height, camera_index=0
 
 # Example usage:
 if __name__ == "__main__":
-    crop_width = 250
-    crop_height = 250
-    crop_x = 200
-    crop_y = 500
+    crop_x = 105
+    crop_y = 101
+    crop_width = 161
+    crop_height = 175
     data = scan_qr_live_cropped(crop_x, crop_y, crop_width, crop_height)
     print("QR code data:" if data else "No QR code detected.", data)
