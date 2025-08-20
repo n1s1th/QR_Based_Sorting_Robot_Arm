@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tray Counts Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        table { border-collapse: collapse; margin-bottom: 20px; }
+        th, td { border: 1px solid #ccc; padding: 10px 15px; }
+        th { background-color: #f0f0f0; }
+        .reset-btn { padding: 10px 20px; background: #f44336; color: white; border: none; cursor: pointer; border-radius: 4px;}
+        .reset-btn:hover { background: #d32f2f; }
+    </style>
+    <script>
+        // Auto-refresh the page every 5 seconds
+        setTimeout(function(){
+            window.location.reload(1);
+        }, 5000);
+    </script>
+</head>
+<body>
+    <h1>Tray Counts</h1>
+    <table>
+        <tr>
+            <th>Tray</th>
+            <th>Count</th>
+        </tr>
+        {% for tray, count in counts.items() %}
+        <tr>
+            <td>{{ tray }}</td>
+            <td>{{ count }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <form action="{{ url_for('reset') }}" method="post">
+        <button class="reset-btn" type="submit">Reset Counts</button>
+    </form>
+</body>
+</html>
