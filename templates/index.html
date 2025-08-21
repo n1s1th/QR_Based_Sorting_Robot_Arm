@@ -1,38 +1,90 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Tray Counts Dashboard</title>
+    <title>Tray Sorting Robot Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <style>
-        body { font-family: Arial, sans-serif; padding: 20px; }
-        table { border-collapse: collapse; margin-bottom: 20px; }
-        th, td { border: 1px solid #ccc; padding: 10px 15px; }
-        th { background-color: #f0f0f0; }
-        .reset-btn { padding: 10px 20px; background: #f44336; color: white; border: none; cursor: pointer; border-radius: 4px;}
-        .reset-btn:hover { background: #d32f2f; }
+        body { background-color: #f6f8fa; font-family: 'Segoe UI', Arial, sans-serif; }
+        .container { margin-top: 30px; }
+        .tray-table th, .tray-table td { text-align: center; }
+        .log-box {
+            background: #1e1e1e;
+            color: #d8d8d8;
+            font-family: 'Fira Mono', monospace;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            max-height: 350px;
+            overflow-y: auto;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .tray-full-alert {
+            background: #ffe0e0;
+            border: 1px solid #ff7b7b;
+            color: #b80000;
+            font-weight: bold;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+        .reset-btn {
+            background: linear-gradient(90deg, #e53935 0%, #e35d5b 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 30px;
+            font-size: 1.1em;
+            box-shadow: 0 2px 8px rgba(227,93,91,0.08);
+        }
+        .reset-btn:disabled { opacity: 0.5; cursor: not-allowed; }
     </style>
     <script>
         // Auto-refresh the page every 5 seconds
-        setTimeout(function(){
-            window.location.reload(1);
-        }, 5000);
+        setTimeout(function(){ window.location.reload(1); }, 5000);
     </script>
 </head>
 <body>
-    <h1>Tray Counts</h1>
-    <table>
-        <tr>
-            <th>Tray</th>
-            <th>Count</th>
-        </tr>
-        {% for tray, count in counts.items() %}
-        <tr>
-            <td>{{ tray }}</td>
-            <td>{{ count }}</td>
-        </tr>
+<div class="container">
+    <h1 class="mb-4 text-center"><img src="https://cdn-icons-png.flaticon.com/512/2921/2921222.png" height="50" style="vertical-align:middle;"> Tray Sorting Robot Dashboard</h1>
+
+    {% if tray_full %}
+    <div class="tray-full-alert">
+        <span>⚠️ Tray(s) Full:</span>
+        {% for tray in full_trays %}
+            <span class="badge bg-danger">{{ tray }}</span>
         {% endfor %}
+        <br>
+        System stopped. Please reset or remove objects.
+    </div>
+    {% endif %}
+
+    <table class="table tray-table table-striped table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Tray</th>
+                <th>Count</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for tray, count in counts.items() %}
+            <tr>
+                <td>{{ tray }}</td>
+                <td>{{ count }} {% if count >= 4 %}<span class="badge bg-danger">Full</span>{% endif %}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
     </table>
-    <form action="{{ url_for('reset') }}" method="post">
-        <button class="reset-btn" type="submit">Reset Counts</button>
+
+    <form action="{{ url_for('reset') }}" method="post" class="text-center mb-4">
+        <button class="reset-btn" type="submit" {% if tray_full %}disabled{% endif %}>Reset Counts</button>
     </form>
+
+    <h4>System Log</h4>
+    <div class="log-box">
+        {% for line in logs %}
+            <div>{{ line.strip() }}</div>
+        {% endfor %}
+    </div>
+</div>
 </body>
 </html>

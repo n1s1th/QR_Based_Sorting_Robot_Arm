@@ -1,0 +1,23 @@
+Connected to Arduino on COM6
+Waiting for Arduino to request slider/arm input...
+Arduino: Homing slider...
+Arduino: Slider homed to position 0cm.
+Arduino: Enter slider position and robot arm action separated by space, e.g.: B c
+No object detected in tray. Retrying in 10 seconds...
+No object detected in tray. Retrying in 10 seconds...
+Automated selection: Slider cell 'C a', Arm 'd'
+Sent to Arduino: C a d
+Waiting for Arduino to signal READY_TO_SCAN...
+Arduino: Moving slider to cell C at 26 cm
+Arduino: Arrived at 26 cm.
+Arduino: Triggering robot arm function: a d
+Arduino: Moving slider to scanning area (38 cm)
+Arduino: Arrived at 38 cm.
+Arduino: Triggering scanningdrop()
+Arduino: READY_TO_SCAN
+Scanning QR code for tray number (live, 5s timeout)...
+Detected tray code: b4
+Sent to Arduino: b4
+Waiting for Arduino to signal ROUND_COMPLETE...
+Arduino: Enter sorted area action (b1, b2, b3):
+Arduino: Triggering scanningpick()
