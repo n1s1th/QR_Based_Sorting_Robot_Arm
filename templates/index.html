@@ -27,6 +27,17 @@
             border-radius: 6px;
             margin-bottom: 20px;
         }
+        .control-btn {
+            background: linear-gradient(90deg, #36c6e5 0%, #2e8ce3 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 30px;
+            font-size: 1.1em;
+            margin: 0 8px 12px 0;
+            box-shadow: 0 2px 8px rgba(44,193,245,0.08);
+        }
+        .control-btn:disabled { opacity: 0.5; cursor: not-allowed; }
         .reset-btn {
             background: linear-gradient(90deg, #e53935 0%, #e35d5b 100%);
             color: white;
@@ -39,7 +50,6 @@
         .reset-btn:disabled { opacity: 0.5; cursor: not-allowed; }
     </style>
     <script>
-        // Auto-refresh the page every 5 seconds
         setTimeout(function(){ window.location.reload(1); }, 5000);
     </script>
 </head>
@@ -75,8 +85,17 @@
         </tbody>
     </table>
 
+    <form action="{{ url_for('control') }}" method="post" class="mb-3 text-center">
+        <button class="control-btn" name="cmd" value="start"
+            {% if tray_full or run_status == 'running' %}disabled{% endif %}>Start</button>
+        <button class="control-btn" name="cmd" value="pause"
+            {% if tray_full or run_status != 'running' %}disabled{% endif %}>Pause</button>
+        <button class="control-btn" name="cmd" value="stop"
+            {% if tray_full or run_status == 'stopped' %}disabled{% endif %}>Stop</button>
+    </form>
+
     <form action="{{ url_for('reset') }}" method="post" class="text-center mb-4">
-        <button class="reset-btn" type="submit" {% if tray_full %}disabled{% endif %}>Reset Counts</button>
+        <button class="reset-btn" type="submit">Reset Counts & Logs</button>
     </form>
 
     <h4>System Log</h4>
