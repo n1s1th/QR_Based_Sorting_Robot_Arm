@@ -135,44 +135,56 @@ void loop() {
 
 // --- Sorted Area Functions ---
 void sortedAreaCM1() {
-  int sortedAreaStartCM = 55;
-  int sortedAreaCM = sortedAreaStartCM + roundCount_b1 * cellWidthCMSorted;
+  int sortedAreaStartCM = 52;
+  // Only move every two cycles: (roundCount_b1 / 2) is 0 for rounds 1 & 2, 1 for 3 & 4, etc.
+  int sortedAreaCM = sortedAreaStartCM + (roundCount_b1 / 2) * cellWidthCMSorted;
   Serial.print("Moving slider to sorted area for b1 (");
   Serial.print(sortedAreaCM);
   Serial.println(" cm)");
   moveToPosition(sortedAreaCM);
-  b1();
-  roundCount_b1++;
+
+  b1(); // Your odd/even logic
+
+  roundCount_b1++; // Increment every cycle
 }
 void sortedAreaCM2() {
-  int sortedAreaStartCM = 55;
-  int sortedAreaCM = sortedAreaStartCM + roundCount_b2 * cellWidthCMSorted;
+  int sortedAreaStartCM = 52;
+  // Only move every two cycles: (roundCount_b1 / 2) is 0 for rounds 1 & 2, 1 for 3 & 4, etc.
+  int sortedAreaCM = sortedAreaStartCM + (roundCount_b2 / 2) * cellWidthCMSorted;
   Serial.print("Moving slider to sorted area for b2 (");
   Serial.print(sortedAreaCM);
   Serial.println(" cm)");
   moveToPosition(sortedAreaCM);
-  b2();
-  roundCount_b2++;
+
+  b2(); // Your odd/even logic
+
+  roundCount_b2++; // Increment every cycle
 }
 void sortedAreaCM3() {
-  int sortedAreaStartCM = 70;
-  int sortedAreaCM = sortedAreaStartCM + roundCount_b3 * cellWidthCMSorted;
+  int sortedAreaStartCM = 69;
+  // Only move every two cycles: (roundCount_b1 / 2) is 0 for rounds 1 & 2, 1 for 3 & 4, etc.
+  int sortedAreaCM = sortedAreaStartCM + (roundCount_b3 / 2) * cellWidthCMSorted;
   Serial.print("Moving slider to sorted area for b3 (");
   Serial.print(sortedAreaCM);
   Serial.println(" cm)");
   moveToPosition(sortedAreaCM);
-  b3();
-  roundCount_b3++;
+
+  b3(); // Your odd/even logic
+
+  roundCount_b3++; // Increment every cycle
 }
 void sortedAreaCM4() {
-  int sortedAreaStartCM = 70;
-  int sortedAreaCM = sortedAreaStartCM + roundCount_b4 * cellWidthCMSorted;
+  int sortedAreaStartCM = 69;
+  // Only move every two cycles: (roundCount_b1 / 2) is 0 for rounds 1 & 2, 1 for 3 & 4, etc.
+  int sortedAreaCM = sortedAreaStartCM + (roundCount_b4 / 2) * cellWidthCMSorted;
   Serial.print("Moving slider to sorted area for b4 (");
   Serial.print(sortedAreaCM);
   Serial.println(" cm)");
   moveToPosition(sortedAreaCM);
-  b4();
-  roundCount_b4++;
+
+  b4(); // Your odd/even logic
+
+  roundCount_b4++; // Increment every cycle
 }
 
 // --- Robot Arm Functions ---
@@ -236,74 +248,121 @@ void scanning(const int upperPulses[NUM_SERVOS], const int targetPulses[NUM_SERV
 
 void a() {
   int upperPulses[NUM_SERVOS]      = {350, 180, 420, 220, 450, 240};
-  int targetPulses[NUM_SERVOS]     = {350, 270, 420, 440, 520, 245};
-  int targetPulsesClose[NUM_SERVOS]= {170, 270, 420, 440, 520, 245};
-  int upperPulsesClose[NUM_SERVOS] = {170, 230, 420, 400, 560, 245};
+  int targetPulses[NUM_SERVOS]     = {350, 240, 420, 400, 500, 240};
+  int targetPulsesClose[NUM_SERVOS]= {200, 240, 420, 400, 500, 240};
+  int upperPulsesClose[NUM_SERVOS] = {200, 180, 420, 220, 450, 240};
   robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
 }
 
 void b(){
-  int upperPulses[NUM_SERVOS]      = {350, 270, 390, 180, 250, 230};
-  int targetPulses[NUM_SERVOS]     = {350, 280, 390, 280, 320, 230};
-  int targetPulsesClose[NUM_SERVOS]= {170, 280, 390, 280, 320, 230};
-  int upperPulsesClose[NUM_SERVOS] = {170, 270, 390, 180, 250, 230};
+  int upperPulses[NUM_SERVOS]      = {400, 270, 390, 210, 270, 230};
+  int targetPulses[NUM_SERVOS]     = {400, 270, 390, 270, 320, 230};
+  int targetPulsesClose[NUM_SERVOS]= {200, 270, 390, 270, 320, 230};
+  int upperPulsesClose[NUM_SERVOS] = {200, 270, 390, 210, 270, 230};
   robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
 }
 
 void c() {
-  int upperPulses[NUM_SERVOS]      = {350, 450, 420, 300, 180, 220};
-  int targetPulses[NUM_SERVOS]     = {350, 450, 420, 350, 230, 220};
-  int targetPulsesClose[NUM_SERVOS]= {170, 450, 420, 350, 230, 220};
-  int upperPulsesClose[NUM_SERVOS] = {170, 450, 420, 300, 180, 220};
+  int upperPulses[NUM_SERVOS]      = {400, 450, 420, 300, 180, 220};
+  int targetPulses[NUM_SERVOS]     = {400, 450, 420, 350, 230, 220};
+  int targetPulsesClose[NUM_SERVOS]= {200, 450, 420, 350, 230, 220};
+  int upperPulsesClose[NUM_SERVOS] = {200, 450, 420, 300, 180, 220};
   robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
 }
 
 void scanningdrop() {
-  int upperPulses[NUM_SERVOS]      = {170, 270, 390, 200, 260, 230};
-  int targetPulses[NUM_SERVOS]     = {170, 290, 390, 260, 300, 230};
-  int targetPulsesClose[NUM_SERVOS]= {350, 290, 390, 260, 300, 230};
-  int upperPulsesClose[NUM_SERVOS] = {350, 150, 390, 200, 260, 230};
+  int upperPulses[NUM_SERVOS]      = {200, 270, 390, 180, 250, 230};
+  int targetPulses[NUM_SERVOS]     = {200, 280, 390, 280, 320, 230};
+  int targetPulsesClose[NUM_SERVOS]= {400, 280, 390, 280, 320, 230};
+  int upperPulsesClose[NUM_SERVOS] = {400, 150, 390, 200, 260, 230};
   scanning(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
 }
 void scanningpick() {
-  int upperPulses[NUM_SERVOS]      = {350, 270, 390, 200, 260, 230};
-  int targetPulses[NUM_SERVOS]     = {350, 290, 390, 295, 320, 230};
-  int targetPulsesClose[NUM_SERVOS]= {170, 290, 390, 295, 320, 230};
-  int upperPulsesClose[NUM_SERVOS] = {170, 270, 390, 200, 260, 230};
+  int upperPulses[NUM_SERVOS]      = {400, 280, 390, 280, 320, 230};
+  int targetPulses[NUM_SERVOS]     = {400, 280, 390, 280, 320, 230};
+  int targetPulsesClose[NUM_SERVOS]= {200, 280, 390, 280, 320, 230};
+  int upperPulsesClose[NUM_SERVOS] = {200, 270, 390, 180, 250, 230};
   robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
 }
 void b1(){
   Serial.println("Triggered b1()");
-  int upperPulses[NUM_SERVOS]      = {170, 450, 420, 280, 150, 220};
-  int targetPulses[NUM_SERVOS]     = {170, 450, 420, 340, 200, 220};
-  int targetPulsesClose[NUM_SERVOS]= {350, 450, 420, 340, 200, 220};
-  int upperPulsesClose[NUM_SERVOS] = {350, 450, 420, 280, 150, 220};
-  robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
+  //roundCount_b1++;
+  if (roundCount_b1 % 2 == 1) {
+    // Odd count pulses for b1
+    int upperPulses[NUM_SERVOS]      = {170, 450, 420, 280, 150, 220};
+    int targetPulses[NUM_SERVOS]     = {170, 450, 420, 340, 200, 220};
+    int targetPulsesClose[NUM_SERVOS]= {350, 450, 420, 340, 200, 220};
+    int upperPulsesClose[NUM_SERVOS] = {350, 450, 420, 280, 150, 220};
+    robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
+  } else {
+    // Even count pulses for b1
+    int upperPulses[NUM_SERVOS]      = {170, 280, 420, 190, 215, 220};
+    int targetPulses[NUM_SERVOS]     = {170, 320, 420, 250, 240, 220};
+    int targetPulsesClose[NUM_SERVOS]= {400, 320, 420, 250, 240, 220};
+    int upperPulsesClose[NUM_SERVOS] = {400, 280, 420, 190, 215, 220};
+    robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
+  }
 }
+
 void b3(){
   Serial.println("Triggered b3()");
-  int upperPulses[NUM_SERVOS]      = {170, 280, 420, 190, 215, 220};
-  int targetPulses[NUM_SERVOS]     = {170, 320, 420, 250, 240, 220};
-  int targetPulsesClose[NUM_SERVOS]= {350, 320, 420, 250, 240, 220};
-  int upperPulsesClose[NUM_SERVOS] = {350, 280, 420, 190, 215, 220};
-  robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
+  //roundCount_b1++;
+  if (roundCount_b3 % 2 == 1) {
+    // Odd count pulses for b1
+    int upperPulses[NUM_SERVOS]      = {170, 450, 420, 280, 150, 220};
+    int targetPulses[NUM_SERVOS]     = {170, 450, 420, 340, 200, 220};
+    int targetPulsesClose[NUM_SERVOS]= {350, 450, 420, 340, 200, 220};
+    int upperPulsesClose[NUM_SERVOS] = {350, 450, 420, 280, 150, 220};
+    robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
+  } else {
+    // Even count pulses for b1
+    int upperPulses[NUM_SERVOS]      = {170, 280, 420, 190, 215, 220};
+    int targetPulses[NUM_SERVOS]     = {170, 320, 420, 250, 240, 220};
+    int targetPulsesClose[NUM_SERVOS]= {400, 320, 420, 250, 240, 220};
+    int upperPulsesClose[NUM_SERVOS] = {400, 280, 420, 190, 215, 220};
+    robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
+  }
 }
 void b2(){
   Serial.println("Triggered b2()");
-  int upperPulses[NUM_SERVOS]      = {170, 200, 420, 150, 290, 220};
-  int targetPulses[NUM_SERVOS]     = {170, 220, 420, 250, 350, 220};
-  int targetPulsesClose[NUM_SERVOS]= {350, 220, 420, 250, 350, 220};
-  int upperPulsesClose[NUM_SERVOS] = {350, 200, 420, 150, 290, 220};
-  robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
+  //roundCount_b1++;
+  if (roundCount_b2 % 2 == 1) {
+    // Odd count pulses for b1
+    int upperPulses[NUM_SERVOS]      = {170, 200, 420, 150, 290, 220};
+    int targetPulses[NUM_SERVOS]     = {170, 220, 420, 250, 350, 220};
+    int targetPulsesClose[NUM_SERVOS]= {350, 220, 420, 250, 350, 220};
+    int upperPulsesClose[NUM_SERVOS] = {350, 200, 420, 150, 290, 220};
+    robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
+  } else {
+    // Even count pulses for b1
+    int upperPulses[NUM_SERVOS]      = {170, 160, 420, 150, 360, 220};
+    int targetPulses[NUM_SERVOS]     = {170, 230, 420, 360, 490, 220};
+    int targetPulsesClose[NUM_SERVOS]= {350, 230, 420, 360, 490, 220};
+    int upperPulsesClose[NUM_SERVOS] = {350, 160, 420, 250, 450, 220};
+    robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
+  }
 }
+
 void b4(){
   Serial.println("Triggered b4()");
-  int upperPulses[NUM_SERVOS]      = {170, 160, 420, 150, 360, 220};
-  int targetPulses[NUM_SERVOS]     = {170, 230, 420, 360, 490, 220};
-  int targetPulsesClose[NUM_SERVOS]= {350, 230, 420, 360, 490, 220};
-  int upperPulsesClose[NUM_SERVOS] = {350, 160, 420, 250, 450, 220};
-  robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
+  //roundCount_b1++;
+  if (roundCount_b4 % 2 == 1) {
+    // Odd count pulses for b1
+    int upperPulses[NUM_SERVOS]      = {170, 200, 420, 150, 290, 220};
+    int targetPulses[NUM_SERVOS]     = {170, 220, 420, 250, 350, 220};
+    int targetPulsesClose[NUM_SERVOS]= {350, 220, 420, 250, 350, 220};
+    int upperPulsesClose[NUM_SERVOS] = {350, 200, 420, 150, 290, 220};
+    robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
+  } else {
+    // Even count pulses for b1
+    int upperPulses[NUM_SERVOS]      = {170, 160, 420, 150, 360, 220};
+    int targetPulses[NUM_SERVOS]     = {170, 230, 420, 360, 490, 220};
+    int targetPulsesClose[NUM_SERVOS]= {350, 230, 420, 360, 490, 220};
+    int upperPulsesClose[NUM_SERVOS] = {350, 160, 420, 250, 450, 220};
+    robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
+  }
 }
+
 void dispatchFunction(char ch) {
   switch (ch) {
     case 'a': a(); break;

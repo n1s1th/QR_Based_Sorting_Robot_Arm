@@ -3,14 +3,12 @@ Waiting for Arduino to request slider/arm input...
 Arduino: Homing slider...
 Arduino: Slider homed to position 0cm.
 Arduino: Enter slider position and robot arm action separated by space, e.g.: B c
-No object detected in tray. Retrying in 10 seconds...
-No object detected in tray. Retrying in 10 seconds...
-Automated selection: Slider cell 'C a', Arm 'd'
-Sent to Arduino: C a d
+Automated selection: Slider cell 'B b', Arm 'a'
+Sent to Arduino: B b a
 Waiting for Arduino to signal READY_TO_SCAN...
-Arduino: Moving slider to cell C at 26 cm
-Arduino: Arrived at 26 cm.
-Arduino: Triggering robot arm function: a d
+Arduino: Moving slider to cell B at 17 cm
+Arduino: Arrived at 17 cm.
+Arduino: Triggering robot arm function: b a
 Arduino: Moving slider to scanning area (38 cm)
 Arduino: Arrived at 38 cm.
 Arduino: Triggering scanningdrop()
@@ -21,14 +19,92 @@ Sent to Arduino: b4
 Waiting for Arduino to signal ROUND_COMPLETE...
 Arduino: Enter sorted area action (b1, b2, b3):
 Arduino: Triggering scanningpick()
-Serial connection error: could not open port '/dev/ttyACM0': FileNotFoundError(2, 'The system cannot find the path specified.', None, 3)
-Serial connection error: could not open port '/dev/ttyACM0': FileNotFoundError(2, 'The system cannot find the path specified.', None, 3)
-Connected to Arduino on COM6
+Arduino: Moving slider to sorted area for b4 (70 cm)
+Arduino: Arrived at 70 cm.
+Arduino: Triggered b4()
+Arduino: ROUND_COMPLETE
+Tray counts so far:
+B1 count: 0
+B2 count: 0
+B3 count: 0
+B4 count: 1
+Round complete. Ready for next round!
+
 Waiting for Arduino to request slider/arm input...
+Arduino: Returning slider to home position...
+Arduino: Homing slider...
+Arduino: Slider homed to position 0cm.
+Arduino: Enter slider position and robot arm action separated by space, e.g.: B c
+Automated selection: Slider cell 'B b', Arm 'a'
+Sent to Arduino: B b a
+Waiting for Arduino to signal READY_TO_SCAN...
+Arduino: Moving slider to cell B at 17 cm
+Arduino: Arrived at 17 cm.
+Arduino: Triggering robot arm function: b a
+Arduino: Moving slider to scanning area (38 cm)
+Arduino: Arrived at 38 cm.
+Arduino: Triggering scanningdrop()
+Arduino: READY_TO_SCAN
+Scanning QR code for tray number (live, 5s timeout)...
+Detected tray code: b4
+Sent to Arduino: b4
+Waiting for Arduino to signal ROUND_COMPLETE...
+Arduino: Enter sorted area action (b1, b2, b3):
+Arduino: Triggering scanningpick()
+Arduino: Moving slider to sorted area for b4 (77 cm)
+Arduino: Arrived at 77 cm.
+Arduino: Triggered b4()
+Arduino: ROUND_COMPLETE
+Tray counts so far:
+B1 count: 0
+B2 count: 0
+B3 count: 0
+B4 count: 2
+Round complete. Ready for next round!
+
+Waiting for Arduino to request slider/arm input...
+Arduino: Returning slider to home position...
 Arduino: Homing slider...
 Arduino: Slider homed to position 0cm.
 Arduino: Enter slider position and robot arm action separated by space, e.g.: B c
 No object detected in tray. Retrying in 10 seconds...
 No object detected in tray. Retrying in 10 seconds...
 No object detected in tray. Retrying in 10 seconds...
-System stopped.
+No object detected in tray. Retrying in 10 seconds...
+No object detected in tray. Retrying in 10 seconds...
+Automated selection: Slider cell 'B b', Arm 'a'
+Sent to Arduino: B b a
+Waiting for Arduino to signal READY_TO_SCAN...
+Arduino: Moving slider to cell B at 17 cm
+Arduino: Arrived at 17 cm.
+Arduino: Triggering robot arm function: b a
+Arduino: Moving slider to scanning area (38 cm)
+Arduino: Arrived at 38 cm.
+Arduino: Triggering scanningdrop()
+Arduino: READY_TO_SCAN
+Scanning QR code for tray number (live, 5s timeout)...
+Detected tray code: b1
+Sent to Arduino: b1
+Waiting for Arduino to signal ROUND_COMPLETE...
+Arduino: Enter sorted area action (b1, b2, b3):
+Arduino: Triggering scanningpick()
+Arduino: Moving slider to sorted area for b1 (55 cm)
+Arduino: Arrived at 55 cm.
+Arduino: Triggered b1()
+Arduino: ROUND_COMPLETE
+Tray counts so far:
+B1 count: 1
+B2 count: 0
+B3 count: 0
+B4 count: 2
+Round complete. Ready for next round!
+
+Waiting for Arduino to request slider/arm input...
+Arduino: Returning slider to home position...
+Arduino: Homing slider...
+Arduino: Slider homed to position 0cm.
+Arduino: Enter slider position and robot arm action separated by space, e.g.: B c
+No object detected in tray. Retrying in 10 seconds...
+No object detected in tray. Retrying in 10 seconds...
+No object detected in tray. Retrying in 10 seconds...
+No object detected in tray. Retrying in 10 seconds...
