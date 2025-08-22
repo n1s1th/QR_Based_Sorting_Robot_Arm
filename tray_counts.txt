@@ -1,4 +1,4 @@
-B1 count: 1
-B2 count: 0
+B1 count: 0
+B2 count: 1
 B3 count: 1
-B4 count: 1
+B4 count: 2
