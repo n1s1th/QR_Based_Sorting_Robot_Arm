@@ -248,40 +248,40 @@ void scanning(const int upperPulses[NUM_SERVOS], const int targetPulses[NUM_SERV
 
 void a() {
   int upperPulses[NUM_SERVOS]      = {350, 180, 420, 220, 450, 240};
-  int targetPulses[NUM_SERVOS]     = {350, 240, 420, 400, 500, 240};
-  int targetPulsesClose[NUM_SERVOS]= {200, 240, 420, 400, 500, 240};
-  int upperPulsesClose[NUM_SERVOS] = {200, 180, 420, 220, 450, 240};
+  int targetPulses[NUM_SERVOS]     = {350, 280, 400, 410, 500, 240};
+  int targetPulsesClose[NUM_SERVOS]= {200, 280, 400, 410, 500, 240};
+  int upperPulsesClose[NUM_SERVOS] = {220, 180, 420, 220, 450, 240};
   robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
 }
 
 void b(){
-  int upperPulses[NUM_SERVOS]      = {400, 270, 390, 210, 270, 230};
-  int targetPulses[NUM_SERVOS]     = {400, 270, 390, 270, 320, 230};
-  int targetPulsesClose[NUM_SERVOS]= {200, 270, 390, 270, 320, 230};
-  int upperPulsesClose[NUM_SERVOS] = {200, 270, 390, 210, 270, 230};
+  int upperPulses[NUM_SERVOS]      = {350, 270, 390, 180, 250, 230};
+  int targetPulses[NUM_SERVOS]     = {350, 280, 390, 280, 320, 230};
+  int targetPulsesClose[NUM_SERVOS]= {220, 280, 390, 280, 320, 230};
+  int upperPulsesClose[NUM_SERVOS] = {220, 270, 390, 180, 250, 230};
   robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
 }
 
 void c() {
-  int upperPulses[NUM_SERVOS]      = {400, 450, 420, 300, 180, 220};
-  int targetPulses[NUM_SERVOS]     = {400, 450, 420, 350, 230, 220};
-  int targetPulsesClose[NUM_SERVOS]= {200, 450, 420, 350, 230, 220};
-  int upperPulsesClose[NUM_SERVOS] = {200, 450, 420, 300, 180, 220};
+  int upperPulses[NUM_SERVOS]      = {350, 450, 420, 300, 180, 220};
+  int targetPulses[NUM_SERVOS]     = {350, 450, 420, 350, 230, 220};
+  int targetPulsesClose[NUM_SERVOS]= {220, 450, 420, 350, 230, 220};
+  int upperPulsesClose[NUM_SERVOS] = {220, 450, 420, 300, 180, 220};
   robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
 }
 
 void scanningdrop() {
-  int upperPulses[NUM_SERVOS]      = {200, 270, 390, 180, 250, 230};
-  int targetPulses[NUM_SERVOS]     = {200, 280, 390, 280, 320, 230};
-  int targetPulsesClose[NUM_SERVOS]= {400, 280, 390, 280, 320, 230};
-  int upperPulsesClose[NUM_SERVOS] = {400, 150, 390, 200, 260, 230};
+  int upperPulses[NUM_SERVOS]      = {220, 270, 390, 180, 250, 230};
+  int targetPulses[NUM_SERVOS]     = {220, 280, 390, 280, 320, 230};
+  int targetPulsesClose[NUM_SERVOS]= {350, 280, 390, 280, 320, 230};
+  int upperPulsesClose[NUM_SERVOS] = {350, 150, 390, 200, 260, 230};
   scanning(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
 }
 void scanningpick() {
-  int upperPulses[NUM_SERVOS]      = {400, 280, 390, 280, 320, 230};
-  int targetPulses[NUM_SERVOS]     = {400, 280, 390, 280, 320, 230};
-  int targetPulsesClose[NUM_SERVOS]= {200, 280, 390, 280, 320, 230};
-  int upperPulsesClose[NUM_SERVOS] = {200, 270, 390, 180, 250, 230};
+  int upperPulses[NUM_SERVOS]      = {350, 280, 390, 280, 320, 230};
+  int targetPulses[NUM_SERVOS]     = {350, 280, 390, 280, 320, 230};
+  int targetPulsesClose[NUM_SERVOS]= {220, 280, 390, 280, 320, 230};
+  int upperPulsesClose[NUM_SERVOS] = {220, 270, 390, 180, 250, 230};
   robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
 }
 void b1(){
@@ -289,17 +289,17 @@ void b1(){
   //roundCount_b1++;
   if (roundCount_b1 % 2 == 1) {
     // Odd count pulses for b1
-    int upperPulses[NUM_SERVOS]      = {170, 450, 420, 280, 150, 220};
-    int targetPulses[NUM_SERVOS]     = {170, 450, 420, 340, 200, 220};
+    int upperPulses[NUM_SERVOS]      = {220, 450, 420, 280, 150, 220};
+    int targetPulses[NUM_SERVOS]     = {220, 450, 420, 340, 200, 220};
     int targetPulsesClose[NUM_SERVOS]= {350, 450, 420, 340, 200, 220};
     int upperPulsesClose[NUM_SERVOS] = {350, 450, 420, 280, 150, 220};
     robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
   } else {
     // Even count pulses for b1
-    int upperPulses[NUM_SERVOS]      = {170, 280, 420, 190, 215, 220};
-    int targetPulses[NUM_SERVOS]     = {170, 320, 420, 250, 240, 220};
-    int targetPulsesClose[NUM_SERVOS]= {400, 320, 420, 250, 240, 220};
-    int upperPulsesClose[NUM_SERVOS] = {400, 280, 420, 190, 215, 220};
+    int upperPulses[NUM_SERVOS]      = {220, 280, 420, 190, 215, 220};
+    int targetPulses[NUM_SERVOS]     = {220, 320, 420, 250, 240, 220};
+    int targetPulsesClose[NUM_SERVOS]= {350, 320, 420, 250, 240, 220};
+    int upperPulsesClose[NUM_SERVOS] = {350, 280, 420, 190, 215, 220};
     robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
   }
 }
@@ -309,17 +309,17 @@ void b3(){
   //roundCount_b1++;
   if (roundCount_b3 % 2 == 1) {
     // Odd count pulses for b1
-    int upperPulses[NUM_SERVOS]      = {170, 450, 420, 280, 150, 220};
-    int targetPulses[NUM_SERVOS]     = {170, 450, 420, 340, 200, 220};
+    int upperPulses[NUM_SERVOS]      = {220, 450, 420, 280, 150, 220};
+    int targetPulses[NUM_SERVOS]     = {220, 450, 420, 340, 200, 220};
     int targetPulsesClose[NUM_SERVOS]= {350, 450, 420, 340, 200, 220};
     int upperPulsesClose[NUM_SERVOS] = {350, 450, 420, 280, 150, 220};
     robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
   } else {
     // Even count pulses for b1
-    int upperPulses[NUM_SERVOS]      = {170, 280, 420, 190, 215, 220};
-    int targetPulses[NUM_SERVOS]     = {170, 320, 420, 250, 240, 220};
-    int targetPulsesClose[NUM_SERVOS]= {400, 320, 420, 250, 240, 220};
-    int upperPulsesClose[NUM_SERVOS] = {400, 280, 420, 190, 215, 220};
+    int upperPulses[NUM_SERVOS]      = {220, 280, 420, 190, 215, 220};
+    int targetPulses[NUM_SERVOS]     = {220, 320, 420, 250, 240, 220};
+    int targetPulsesClose[NUM_SERVOS]= {350, 320, 420, 250, 240, 220};
+    int upperPulsesClose[NUM_SERVOS] = {350, 280, 420, 190, 215, 220};
     robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
   }
 }
@@ -328,15 +328,15 @@ void b2(){
   //roundCount_b1++;
   if (roundCount_b2 % 2 == 1) {
     // Odd count pulses for b1
-    int upperPulses[NUM_SERVOS]      = {170, 200, 420, 150, 290, 220};
-    int targetPulses[NUM_SERVOS]     = {170, 220, 420, 250, 350, 220};
+    int upperPulses[NUM_SERVOS]      = {220, 200, 420, 150, 290, 220};
+    int targetPulses[NUM_SERVOS]     = {220, 220, 420, 250, 350, 220};
     int targetPulsesClose[NUM_SERVOS]= {350, 220, 420, 250, 350, 220};
     int upperPulsesClose[NUM_SERVOS] = {350, 200, 420, 150, 290, 220};
     robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
   } else {
     // Even count pulses for b1
-    int upperPulses[NUM_SERVOS]      = {170, 160, 420, 150, 360, 220};
-    int targetPulses[NUM_SERVOS]     = {170, 230, 420, 360, 490, 220};
+    int upperPulses[NUM_SERVOS]      = {220, 160, 420, 150, 360, 220};
+    int targetPulses[NUM_SERVOS]     = {220, 230, 420, 360, 490, 220};
     int targetPulsesClose[NUM_SERVOS]= {350, 230, 420, 360, 490, 220};
     int upperPulsesClose[NUM_SERVOS] = {350, 160, 420, 250, 450, 220};
     robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
@@ -348,15 +348,15 @@ void b4(){
   //roundCount_b1++;
   if (roundCount_b4 % 2 == 1) {
     // Odd count pulses for b1
-    int upperPulses[NUM_SERVOS]      = {170, 200, 420, 150, 290, 220};
-    int targetPulses[NUM_SERVOS]     = {170, 220, 420, 250, 350, 220};
+    int upperPulses[NUM_SERVOS]      = {220, 200, 420, 150, 290, 220};
+    int targetPulses[NUM_SERVOS]     = {220, 220, 420, 250, 350, 220};
     int targetPulsesClose[NUM_SERVOS]= {350, 220, 420, 250, 350, 220};
     int upperPulsesClose[NUM_SERVOS] = {350, 200, 420, 150, 290, 220};
     robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
   } else {
     // Even count pulses for b1
-    int upperPulses[NUM_SERVOS]      = {170, 160, 420, 150, 360, 220};
-    int targetPulses[NUM_SERVOS]     = {170, 230, 420, 360, 490, 220};
+    int upperPulses[NUM_SERVOS]      = {220, 160, 420, 150, 360, 220};
+    int targetPulses[NUM_SERVOS]     = {220, 230, 420, 360, 490, 220};
     int targetPulsesClose[NUM_SERVOS]= {350, 230, 420, 360, 490, 220};
     int upperPulsesClose[NUM_SERVOS] = {350, 160, 420, 250, 450, 220};
     robotarm(upperPulses, targetPulses, targetPulsesClose, upperPulsesClose);
