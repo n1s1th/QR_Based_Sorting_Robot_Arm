@@ -57,7 +57,7 @@ def controller_loop(serial_port='/dev/ttyACM0', baud_rate=9600, camera_index=0):
         return
 
     while True:
-        # Handle stop/pause
+        # Handle stop/pauses
         while run_state['status'] == 'paused':
             log_message("System paused.")
             time.sleep(2)
